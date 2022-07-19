@@ -1,12 +1,17 @@
 package main
 
 import (
+	"flag"
 	"log"
 	"net/http"
 	"path/filepath"
 )
 
 func main() {
+	// Get port number from environment
+	addr := flag.String("addr", ":4200", "network address")
+	flag.Parse()
+
 	mux := http.NewServeMux()
 
 	//Routes
@@ -19,8 +24,8 @@ func main() {
 	mux.Handle("/static", http.NotFoundHandler())
 	mux.Handle("/static/", http.StripPrefix("/static", fileServer))
 
-	log.Println("Server started on http://localhost:4200")
-	err := http.ListenAndServe(":4200", mux)
+	log.Printf("Server started on %s", *addr)
+	err := http.ListenAndServe(*addr, mux)
 	log.Fatal(err)
 }
 
