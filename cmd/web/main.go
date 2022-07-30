@@ -1,3 +1,5 @@
+// https://golangify.com/dynamic-html-templates
+
 package main
 
 import (
